@@ -44,6 +44,35 @@ const Pipeline = ({ data, view, selectedDate }: PipelineProps) => {
     },
   ];
 
+  const renderCustomLabel = (props: any) => {
+    const { x, y, width, height, value, name, index } = props;
+    const conversionRate = index === 0 
+      ? "100%" 
+      : calculateConversionRate(value, funnelData[index - 1].value);
+    
+    return (
+      <g>
+        <text
+          x={x + width + 10}
+          y={y + height / 2}
+          fill="#fff"
+          textAnchor="start"
+          dominantBaseline="middle"
+        >
+          {`${name} (${conversionRate})`}
+        </text>
+      </g>
+    );
+  };
+
+  if (!currentMonthData) {
+    return (
+      <div className="w-full h-[600px] bg-[#1A1F2C] rounded-lg p-6 flex items-center justify-center">
+        <p className="text-white">No data available</p>
+      </div>
+    );
+  }
+
   return (
     <div className="w-full h-[600px] bg-[#1A1F2C] rounded-lg p-6">
       <ResponsiveContainer width="100%" height="100%">
@@ -64,14 +93,7 @@ const Pipeline = ({ data, view, selectedDate }: PipelineProps) => {
           >
             <LabelList
               position="right"
-              fill="#fff"
-              stroke="none"
-              dataKey={(entry: FunnelData, index: number) => {
-                const conversionRate = index === 0 
-                  ? "100%" 
-                  : calculateConversionRate(entry.value, funnelData[index - 1].value);
-                return `${entry.name} (${conversionRate})`;
-              }}
+              content={renderCustomLabel}
             />
           </Funnel>
         </FunnelChart>
