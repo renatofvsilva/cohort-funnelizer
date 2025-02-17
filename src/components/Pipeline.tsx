@@ -58,6 +58,8 @@ const Pipeline = ({ data, view, selectedDate }: PipelineProps) => {
           fill="#fff"
           textAnchor="start"
           dominantBaseline="middle"
+          style={{ fontSize: '12px' }}
+          className="text-xs font-medium"
         >
           {`${name} (${conversionRate})`}
         </text>
