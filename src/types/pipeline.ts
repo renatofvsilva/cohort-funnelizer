@@ -7,3 +7,9 @@ export interface PipelineData {
   negociacao: number;
   venda: number;
 }
+
+export interface FunnelData {
+  value: number;
+  name: string;
+  fill: string;
+}
